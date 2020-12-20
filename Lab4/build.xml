@@ -1,0 +1,36 @@
+<?xml version="1.0" ?>
+<project name="Lab4" default="war">
+ 
+    <path id="compile.classpath">
+        <fileset dir="../Lab4/src">
+            <include name="*.jar"/>
+        </fileset>
+    </path>
+     
+    <target name="init">
+        <mkdir dir="../Lab4/build/classes"/>
+        <mkdir dir="../Lab4/build/WEB-INF/static" />
+        <copy file="../Lab4/web/index.jsp" todir="../Lab4/build/WEB-INF/static" />
+        <copy file="../Lab4/web/afternoon.jsp" todir="../Lab4/build/WEB-INF/static" />
+        <copy file="../Lab4/web/evening.jsp" todir="../Lab4/build/WEB-INF/static" />
+        <copy file="../Lab4/web/morning.jsp" todir="../Lab4/build/WEB-INF/static" />
+        <copy file="../Lab4/web/night.jsp" todir="../Lab4/build/WEB-INF/static" />
+
+        <property name="server" value="F:\apache" />
+    </target>
+     
+    <target name="compile" depends="init" >
+        <javac destdir="../Lab4/build/classes" debug="true" srcdir="src">
+            <classpath>
+                <fileset file= "${server}\lib\servlet-api.jar" />
+            </classpath>
+        </javac>
+    </target>
+     
+    <target name="war" depends="compile">
+        <war destfile="${server}/webapps/Lab4.war" webxml="../Lab4/web/WEB-INF/web.xml">
+            <classes dir="../Lab4/build/classes"/>
+            <fileset dir="../Lab4/build/WEB-INF/static" />
+        </war>
+    </target>
+</project>

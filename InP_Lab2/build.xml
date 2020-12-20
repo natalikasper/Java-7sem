@@ -1,0 +1,24 @@
+<?xml version="1.0" ?>
+<project name="Lab2_K" default="war">
+
+    <target name="init">
+        <mkdir dir="build/classes" />
+        <mkdir dir="WEB-INF/static" />
+        <mkdir dir="WEB-INF/lib" />
+        <copy file="index.html" todir="WEB-INF/static" />
+        <property name="server" value="F:\apache" />
+    </target>
+
+    <target name="compile" depends="init" >
+        <javac destdir="build\classes" debug="true" srcdir="src"
+               classpath = "${server}\lib\servlet-api.jar"/>
+    </target>
+
+    <target name="war" depends="compile">
+        <war destfile="${server}/webapps/Lab2_K.war" webxml="web/WEB-INF/web.xml">
+            <lib dir="WEB-INF/lib"/>
+            <classes dir="build/classes"/>
+            <fileset dir="WEB-INF/static" />
+        </war>
+    </target>
+</project>

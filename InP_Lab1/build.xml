@@ -1,0 +1,30 @@
+<project name="InP_Lab1" default="war">
+    <path id="compile.classpath">
+        <fileset dir="web/WEB-INF/lib">
+            <include name="*.jar"/>
+        </fileset>
+    </path>
+    <target name="init">
+        <mkdir dir="build/classes"/>
+        <mkdir dir="dist" />
+    </target>
+
+    <target name="compile">
+        <mkdir dir="build/classes"/>
+        <javac srcdir="src" destdir="build/classes"/>
+	<property name="server" value="F:\apache" />
+    </target>
+
+    <target name="war" depends="compile">
+        <war destfile="${server}/webapps/Lab1_K.war" webxml="web/WEB-INF/web.xml">
+            <fileset dir="web"/>
+            <lib dir="web/WEB-INF/lib"/>
+            <classes dir="build/classes"/>
+        </war>
+    </target>
+
+    <target name="clean">
+        <delete dir="dist" />
+        <delete dir="build" />
+    </target>
+</project>

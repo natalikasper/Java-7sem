@@ -1,0 +1,43 @@
+<?xml version="1.0" ?>
+<project name="Lab3_K" default="war">
+ 
+    <path id="compile.classpath">
+        <fileset dir="src">
+            <include name="*.jar"/>
+        </fileset>
+    </path>
+     
+<path id="project.classpath">
+	<fileset dir="WEB-INF/lib"/>
+	<pathelement location="src"/>
+	<pathelement location="build/classes"/>
+</path>
+
+    <target name="init">
+        <mkdir dir="build/classes"/>
+        <mkdir dir="WEB-INF/static" />
+        <mkdir dir="WEB-INF/lib" />
+        <copy file="index.html" todir="WEB-INF/static" />
+        <copy file="error.html" todir="WEB-INF/static" />
+        <copy file="redirect.html" todir="WEB-INF/static" />
+        <property name="server" value="F:\apache" />
+    </target>
+     
+<target name="compile" depends="init" >
+	<javac destdir="build\classes" debug="true" srcdir="src" classpathref="project.classpath">
+		<classpath>
+			<fileset file= "${server}\lib\servlet-api.jar" />
+			<fileset file= "${server}\lib\org.apache.commons.httpclient.jar" />
+			<fileset file= "${server}\lib\org-apache-commons-codec.jar" />
+            	</classpath>
+        </javac>
+    </target>
+     
+    <target name="war" depends="compile">
+        <war destfile="${server}/webapps/Lab3.war" webxml="WEB-INF/web.xml">
+            <lib dir="WEB-INF/lib"/>
+            <classes dir="build/classes"/>
+            <fileset dir="WEB-INF/static" />
+        </war>
+    </target>
+</project>

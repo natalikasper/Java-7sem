@@ -1,0 +1,34 @@
+<project name="Lab12_forms" default="copy">
+    <target name="init">
+        <echo message="Build Lab11"/>
+        <property name="server"
+                  value="F:\apache\"/>
+        <property name="work"
+                  value="D:\7sem\Java\lab12\"/>
+    </target>
+    <target name="compile" depends="init">
+        <javac srcdir="${work}/src" destdir="${work}/build">
+            <classpath>
+                <fileset dir="${work}/WEB-INF/lib"/>
+            </classpath>
+        </javac>
+    </target>
+    <target name="create" depends="compile">
+        <delete dir="${server}webapps/Lab12_forms/"/>
+        <mkdir dir="${server}webapps/Lab12_forms/"/>
+        <mkdir dir="${server}webapps/Lab12_forms/WEB-INF"/>
+    </target>
+    <target name="copy" depends="compile">
+        <copy file="${work}WEB-INF/web.xml"
+                todir="${server}webapps/Lab12_forms/WEB-INF/"/>
+        <copy todir="${server}webapps/Lab12_forms">
+                <fileset dir="${work}/jsp"/>
+        </copy>
+        <copy todir="${server}webapps/Lab12_forms/WEB-INF/classes">
+            <fileset dir="${work}/build"/>
+        </copy>
+        <copy todir="${server}/webapps/Lab12_forms/WEB-INF/lib">
+            <fileset dir="${work}/WEB-INF/lib"/>
+        </copy>
+    </target>
+</project>

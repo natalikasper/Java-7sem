@@ -1,0 +1,33 @@
+<project name="Lab8" default="copy">
+    <target name="init">
+        <echo message="Build Lab8"/>
+        <property name="server" value="F:\apache\"/>
+        <!--property name="server" value="\\172.16.193.69"/-->
+        <property name="work" value="D:\7sem\Java\lab8\"/>
+    </target>
+    <target name="compile" depends="init">
+        <javac srcdir="${work}/src/servletes" destdir="${work}/build">
+            <classpath>
+                <fileset dir="${work}/WEB-INF/lib"/>
+            </classpath>
+        </javac>
+    </target>
+    <target name="create" depends="compile">
+        <delete dir="${server}webapps/Lab8/"/>
+        <mkdir dir="${server}webapps/Lab8/"/>
+        <mkdir dir="${server}webapps/Lab8/WEB-INF"/>
+    </target>
+    <target name="copy" depends="compile">
+        <copy file="${work}WEB-INF/web.xml"
+                todir="${server}webapps/Lab8/WEB-INF/"/>
+        <copy todir="${server}webapps/Lab8">
+                <fileset dir="${work}/jsp"/>
+        </copy>
+        <copy todir="${server}webapps/Lab8/WEB-INF/classes">
+            <fileset dir="${work}/build"/>
+        </copy>
+        <copy todir="${server}/webapps/Lab8/WEB-INF/lib">
+            <fileset dir="${work}/WEB-INF/lib"/>
+        </copy>
+    </target>
+</project>
